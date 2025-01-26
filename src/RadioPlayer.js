@@ -43,8 +43,14 @@ const App = () => {
       setCurrentDateTime(new Date());
     }, 1000);
 
-    return () => clearInterval(timer);
-  }, [station, volume]);
+    return () => {
+      clearInterval(timer);
+      // Clean up the audio reference when component unmounts
+      if (audioRef.current) {
+        audioRef.current.pause();
+      }
+    };
+  }, [station, volume, stations]);  // Added 'stations' as a dependency
 
   const togglePlayPause = () => {
     if (isPlaying) {
@@ -62,7 +68,9 @@ const App = () => {
 
   const handleVolumeChange = (event) => {
     setVolume(event.target.value);
-    audioRef.current.volume = event.target.value;
+    if (audioRef.current) {
+      audioRef.current.volume = event.target.value;
+    }
   };
 
   return (
@@ -78,9 +86,6 @@ const App = () => {
             <option value="rmf">RMF</option>
             <option value="eska">Eska</option>
           </select>
-          <button onClick={togglePlayPause}>
-            {isPlaying ? 'Pauza' : 'Odtwórz'}
-          </button>
           <input
             type="range"
             min="0"
