@@ -141,68 +141,59 @@ const App = () => {
   const [browserInfo, setBrowserInfo] = useState('');
   const audioRef = useRef(null);
 
-  const stations = {
-    antyradio: 'http://redir.atmcdn.pl/sc/o2/Eurozet/live/antyradio.livx',
-    rmf: 'http://stream.rmf.fm/rmf_fm',
-    eska: 'http://stream.eska.pl:80/eska',
-  };
+// //   const stations = {
+// //     antyradio: 'http://redir.atmcdn.pl/sc/o2/Eurozet/live/antyradio.livx',
+// //     rmf: 'http://stream.rmf.fm/rmf_fm',
+// //     eska: 'http://stream.eska.pl:80/eska',
+// //   };
 
-  useEffect(() => {
-    // Get user's location
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          setLocation(position.coords);
-        },
-        (error) => {
-          console.error(error);
-        }
-      );
-    }
+//   useEffect(() => {
+//     // Get user's location
+//     if (navigator.geolocation) {
+//       navigator.geolocation.getCurrentPosition(
+//         (position) => {
+//           setLocation(position.coords);
+//         },
+//         (error) => {
+//           console.error(error);
+//         }
+//       );
+//     }
 
-    // Get browser information
-    const userAgent = navigator.userAgent;
-    setBrowserInfo(userAgent);
+//     // Get browser information
+//     const userAgent = navigator.userAgent;
+//     setBrowserInfo(userAgent);
 
-    // Set up the audio stream
-    audioRef.current = new Audio(stations[station]);
-    audioRef.current.volume = volume;
-    audioRef.current.preload = 'none';
+//     // Set up the audio stream
+//     audioRef.current = new Audio(stations[station]);
+//     audioRef.current.volume = volume;
+//     audioRef.current.preload = 'none';
 
-    // Update the date/time every second
-    const timer = setInterval(() => {
-      setCurrentDateTime(new Date());
-    }, 1000);
+//     // Update the date/time every second
+//     const timer = setInterval(() => {
+//       setCurrentDateTime(new Date());
+//     }, 1000);
 
-    return () => {
-      clearInterval(timer);
-      // Clean up the audio reference when component unmounts
-      if (audioRef.current) {
-        audioRef.current.pause();
-      }
-    };
-  }, [station, volume, stations]);
+//     return () => {
+//       clearInterval(timer);
+//       // Clean up the audio reference when component unmounts
+//       if (audioRef.current) {
+//         audioRef.current.pause();
+//       }
+//     };
+//   }, [station, volume, stations]);
 
-  const togglePlayPause = () => {
-    if (isPlaying) {
-      audioRef.current.pause();
-    } else {
-      audioRef.current.play();
-    }
-    setIsPlaying(!isPlaying);
-  };
+//   const handleStationChange = (event) => {
+//     setStation(event.target.value);
+//     setIsPlaying(false);
+//   };
 
-  const handleStationChange = (event) => {
-    setStation(event.target.value);
-    setIsPlaying(false);
-  };
-
-  const handleVolumeChange = (event) => {
-    setVolume(event.target.value);
-    if (audioRef.current) {
-      audioRef.current.volume = event.target.value;
-    }
-  };
+//   const handleVolumeChange = (event) => {
+//     setVolume(event.target.value);
+//     if (audioRef.current) {
+//       audioRef.current.volume = event.target.value;
+//     }
+//   };
 
   return (
     <div className="app">
